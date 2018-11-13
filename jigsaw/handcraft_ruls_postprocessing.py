@@ -1,4 +1,4 @@
-from include import *
+from .include import *
 
 train_mask_path = os.path.join(root_dir, r'train/masks')
 train_data_dir = os.path.join(root_dir, r'train/images')

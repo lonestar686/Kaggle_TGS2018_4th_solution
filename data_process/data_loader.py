@@ -40,9 +40,9 @@ class SaltDataset(Dataset):
         print(self.aug_list)
 
         # change to your path
-        self.train_image_path = r'/data1/shentao/DATA/Kaggle/Salt/Kaggle_salt/train/images'
-        self.train_mask_path = r'/data1/shentao/DATA/Kaggle/Salt/Kaggle_salt/train/masks'
-        self.test_image_path = r'/data1/shentao/DATA/Kaggle/Salt/Kaggle_salt/test/images'
+        self.train_image_path = r'/wgdisk/st0008/hzh/workspace/tgs/input/train/images'
+        self.train_mask_path = r'/wgdisk/st0008/hzh/workspace/tgs/input/train/masks'
+        self.test_image_path = r'/wgdisk/st0008/hzh/workspace/tgs/input/test/images'
 
         self.fold_index = None
         self.set_mode(mode, fold_index)

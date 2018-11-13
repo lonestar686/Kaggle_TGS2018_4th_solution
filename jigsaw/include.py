@@ -11,4 +11,4 @@ from sklearn.neighbors import KDTree
 import networkx as nx
 
 # add your path here
-root_dir = r'/data1/shentao/DATA/Kaggle/Salt/Kaggle_salt'
+root_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'

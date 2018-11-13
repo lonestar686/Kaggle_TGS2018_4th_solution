@@ -492,7 +492,8 @@ if __name__ == '__main__':
     parser.add_argument('--pretrained_model', type=str, default=None)
 
     # pseudo label
-    parser.add_argument('--pseudo_csv', type=str, default=r'0.8935_for_pseudo_label.csv')
+    #parser.add_argument('--pseudo_csv', type=str, default=r'0.8935_for_pseudo_label.csv')
+    parser.add_argument('--pseudo_csv', type=str, default=None)
     parser.add_argument('--pseudo_split', type=int, default=0)
 
     parser.add_argument('--lr', type=float, default=0.01)

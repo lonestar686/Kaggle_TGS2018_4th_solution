@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 import torchvision
 import torch.nn.functional as F
-from ibnnet import resnext101_ibn_a,IBN
-from senet import se_resnext50_32x4d
+from .ibnnet import resnext101_ibn_a,IBN
+from .senet import se_resnext50_32x4d
 
 def conv3x3(in_, out, bias=True):
     return nn.Conv2d(in_, out, 3, padding=1, bias=bias)
@@ -537,7 +537,7 @@ class model101A_DeepSupervion(nn.Module):
 
         return center_fc, x_no_empty, x_final
 
-from senet import se_resnext101_32x4d
+from .senet import se_resnext101_32x4d
 class model101B_DeepSupervion(nn.Module):
     def __init__(self, num_classes=1):
         super(model101B_DeepSupervion, self).__init__()
@@ -617,7 +617,7 @@ class model101B_DeepSupervion(nn.Module):
 
         return center_fc, x_no_empty, x_final
 
-from senet import se_resnet152
+from .senet import se_resnet152
 class model152_DeepSupervion(nn.Module):
     def __init__(self, num_classes=1):
         super(model152_DeepSupervion, self).__init__()
@@ -716,7 +716,7 @@ class model152_DeepSupervion(nn.Module):
 
         return center_fc, x_no_empty, x_final
 
-from senet import senet154
+from .senet import senet154
 class model154_DeepSupervion(nn.Module):
     def __init__(self, num_classes=1):
         super(model154_DeepSupervion, self).__init__()

@@ -14,8 +14,8 @@ def save_train_mask(train_csv, save_dir):
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='data prepare')
-    parser.add_argument('--train_csv_path', default = r'/data1/shentao/DATA/Kaggle/Salt/Kaggle_salt/train.csv',required = True, help='train.csv path')
-    parser.add_argument('--train_mask_save_dir', default = r'/data1/shentao/DATA/Kaggle/Salt/Kaggle_salt/train_mask_try', required = True,help='train mask save_dir')
+    parser.add_argument('--train_csv_path', default = r'/wgdisk/st0008/hzh/workspace/tgs/input/train.csv', help='train.csv path')
+    parser.add_argument('--train_mask_save_dir', default = r'/wgdisk/st0008/hzh/workspace/tgs/input/train_mask_try', help='train mask save_dir')
     args = parser.parse_args()
     save_train_mask(args.train_csv_path, args.train_mask_save_dir)
 

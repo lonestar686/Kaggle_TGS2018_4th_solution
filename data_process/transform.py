@@ -241,7 +241,7 @@ def resize_and_random_pad_edgeYreflectX(image, mask, resize_size, factor):
 
 def center_corp(image, image_size, crop_size):
     image = cv2.resize(image, (image_size, image_size))
-    radius = (image_size - crop_size)/2
+    radius = (image_size - crop_size)//2
     image = image[radius:radius+crop_size,radius:radius+crop_size]
     return image
 
