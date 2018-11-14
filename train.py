@@ -193,8 +193,8 @@ class SingleModelSolver(object):
                 all_loss = bce_loss_final + 0.05 * class_loss
 
                 loss = {}
-                loss['loss_seg'] = bce_loss_final.data[0]
-                loss['loss_classifier'] = class_loss.data[0]
+                loss['loss_seg'] = bce_loss_final.item() #bce_loss_final.data[0]
+                loss['loss_classifier'] = class_loss.item() #class_loss.data[0]
 
                 if has_empty_nonempty:
                     indices = self.to_var(torch.LongTensor(non_empty))
@@ -202,7 +202,7 @@ class SingleModelSolver(object):
                     mask_non_empty = torch.index_select(labels, 0, indices)
                     loss_no_empty = mixed_dice_bce_loss(y_non_empty, mask_non_empty, dice_weight=self.dice_weight, bce_weight=self.bce_weight)
                     all_loss += 0.50 * loss_no_empty
-                    loss['loss_seg_noempty'] = loss_no_empty.data[0]
+                    loss['loss_seg_noempty'] = loss_no_empty.item() #loss_no_empty.data[0]
 
                 self.g_optimizer.zero_grad()
                 all_loss.backward()
@@ -259,8 +259,8 @@ class SingleModelSolver(object):
                     all_loss = loss_final +  0.05 * class_loss
 
                     loss = {}
-                    loss['loss_seg'] = loss_final.data[0]
-                    loss['loss_classifier'] = class_loss.data[0]
+                    loss['loss_seg'] = loss_final.item() #loss_final.data[0]
+                    loss['loss_classifier'] = class_loss.item() #class_loss.data[0]
 
                     if has_empty_nonempty:
                         indices = self.to_var(torch.LongTensor(non_empty))
@@ -268,7 +268,7 @@ class SingleModelSolver(object):
                         mask_non_empty = torch.index_select(labels, 0, indices)
                         loss_no_empty = self.criterion(y_non_empty, mask_non_empty)
                         all_loss +=  0.50 * loss_no_empty
-                        loss['loss_seg_noempty'] = loss_no_empty.data[0]
+                        loss['loss_seg_noempty'] = loss_no_empty.item() #loss_no_empty.data[0]
 
                     self.g_optimizer.zero_grad()
                     all_loss.backward()
@@ -370,7 +370,7 @@ class SingleModelSolver(object):
                 output = self.to_var(output)
 
                 bce_loss = self.criterion(output, labels)
-                loss += bce_loss.data[0]
+                loss += bce_loss.item() #bce_loss.data[0]
                 t += 1.0
 
         valid_loss = loss / t
