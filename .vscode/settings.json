@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/hzh/MachineLearning/equinor/tgs/env_seutao/bin/python"
+    "python.pythonPath": "/home/hzh/MachineLearning/equinor/tgs/env_seutao/bin/python",
+    "python.linting.enabled": true
 }
