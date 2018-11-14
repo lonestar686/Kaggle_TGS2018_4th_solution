@@ -1,13 +1,13 @@
-from include import *
+from .include import *
 
 Disimi_Threshold = 10
 Compa_Threshold = 0.2
 
-train_img_path = os.path.join(root_dir,'train/images/')
-train_mask_path = os.path.join(root_dir,'train/masks/')
-test_path = os.path.join(root_dir,'test/images/')
-train_file_path = os.path.join(root_dir,'train.csv')
-test_file_path = os.path.join(root_dir,'test.csv')
+train_img_path = os.path.join(data_dir,'train/images/')
+train_mask_path = os.path.join(data_dir,'train/masks/')
+test_path = os.path.join(data_dir,'test/images/')
+train_file_path = os.path.join(data_dir,'train.csv')
+test_file_path = os.path.join(data_dir,'test.csv')
 
 def make_test_list():
     outfile = open(test_file_path, 'w')

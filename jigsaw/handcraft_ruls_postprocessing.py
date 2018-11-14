@@ -1,8 +1,8 @@
 from .include import *
 
-train_mask_path = os.path.join(root_dir, r'train/masks')
-train_data_dir = os.path.join(root_dir, r'train/images')
-test_data_dir = os.path.join(root_dir, r'test/images')
+train_mask_path = os.path.join(data_dir, r'train/masks')
+train_data_dir = os.path.join(data_dir, r'train/images')
+test_data_dir = os.path.join(data_dir, r'test/images')
 
 vertical_y_ratio = 0.8
 # build train img set, test img set
