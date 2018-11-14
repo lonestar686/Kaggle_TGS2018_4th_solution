@@ -19,7 +19,7 @@ import imgaug as ia
 # NEPTUNE_CONFIG_PATH = str(pathlib.Path(__file__).resolve().parents[1] / 'configs' / 'neptune.yaml')
 
 import argparse
-from utils import *
+
 import numpy as np
 import os
 import glob
@@ -31,7 +31,7 @@ def save_csv_images(csv_path, save_path):
 
     for id in dict:
         id_img = dict[id]*255
-        cv2.imwrite(os.path.join(save_path,id+'.png'),id_img)
+        cv2.imwrite(os.path.join(save_path,id+'.png'), id_img)
 
 def create_csv_lists(image_dir, printable = True):
     if not os.path.exists(image_dir):

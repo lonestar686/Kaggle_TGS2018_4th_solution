@@ -5,6 +5,8 @@ from data_process.transform import *
 import random
 import pandas as pd
 
+import cv2
+
 def read_txt(txt):
     f = open(txt, 'r')
     lines = f.readlines()
@@ -40,9 +42,14 @@ class SaltDataset(Dataset):
         print(self.aug_list)
 
         # change to your path
-        self.train_image_path = r'/wgdisk/st0008/hzh/workspace/tgs/input/train/images'
-        self.train_mask_path = r'/wgdisk/st0008/hzh/workspace/tgs/input/train/masks'
-        self.test_image_path = r'/wgdisk/st0008/hzh/workspace/tgs/input/test/images'
+        # on h050018
+        data_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
+        # my laptop
+        data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
+
+        self.train_image_path = os.path.join(data_dir, r'train/images')
+        self.train_mask_path = os.path.join(data_dir, r'train/masks')
+        self.test_image_path = os.path.join(data_dir, r'test/images')
 
         self.fold_index = None
         self.set_mode(mode, fold_index)

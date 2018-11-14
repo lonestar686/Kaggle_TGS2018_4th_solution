@@ -11,4 +11,7 @@ from sklearn.neighbors import KDTree
 import networkx as nx
 
 # add your path here
-root_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
+# on h050018
+# root_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
+# on my laptop
+root_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
