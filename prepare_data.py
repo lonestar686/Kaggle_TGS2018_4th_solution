@@ -1,4 +1,8 @@
-from utils import *
+""" prepare data """
+import os
+import argparse
+import cv2
+from utils import decode_csv
 
 def save_train_mask(train_csv, save_dir):
     print(train_csv)
