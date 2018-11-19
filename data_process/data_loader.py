@@ -45,7 +45,7 @@ class SaltDataset(Dataset):
         # on h050018
         data_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
         # my laptop
-        data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
+        # data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
 
         self.train_image_path = os.path.join(data_dir, r'train/images')
         self.train_mask_path = os.path.join(data_dir, r'train/masks')

@@ -11,6 +11,6 @@ import networkx as nx
 
 # add your path here
 # on h050018
-# data_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
+data_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
 # on my laptop
-data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
+# data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'

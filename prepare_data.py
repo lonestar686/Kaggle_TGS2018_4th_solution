@@ -20,9 +20,9 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser(description='data prepare')
     # on h050018
-    #data_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
+    data_dir = r'/wgdisk/st0008/hzh/workspace/tgs/input'
     # on my laptop
-    data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
+    # data_dir = r'/home/hzh/MachineLearning/equinor/tgs/input'
     #
     parser.add_argument('--train_csv_path', default=os.path.join(data_dir, r'train.csv'), help='train.csv path')
     parser.add_argument('--train_mask_save_dir', default=os.path.join(data_dir, r'train_mask_try'), help='train mask save_dir')
