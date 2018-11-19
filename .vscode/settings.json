@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "/home/hzh/MachineLearning/equinor/tgs/env_seutao/bin/python",
+    "python.pythonPath": "/wgdisk/st0008/hzh/workspace/tgs/kernels/tgs_pytorch/bin/python",
     "python.linting.enabled": true
 }
