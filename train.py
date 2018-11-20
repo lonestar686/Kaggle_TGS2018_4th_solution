@@ -403,7 +403,7 @@ class SingleModelSolver(object):
 
     def get_infer_TTA(self, fold_index, thres):
         self.G.eval()
-        test_loader = get_foldloader(self.image_size, self.batch_size/2, 0, mode='test')
+        test_loader = get_foldloader(self.image_size, self.batch_size//2, 0, mode='test')
 
         out = []
         for i, (id , images) in enumerate(test_loader):
@@ -444,7 +444,7 @@ class SingleModelSolver(object):
     def infer_fold_TTA(self, fold_index, mode = 'max_map', Cycle = None):
 
         print(mode)
-        val_loader = get_foldloader(self.image_size, self.batch_size/2, fold_index, mode='val')
+        val_loader = get_foldloader(self.image_size, self.batch_size//2, fold_index, mode='val')
         _, max_map, thres = self.val_TTA(fold_index, val_loader, is_load = True, mode = mode, Cycle = Cycle)
 
         if fold_index<0:

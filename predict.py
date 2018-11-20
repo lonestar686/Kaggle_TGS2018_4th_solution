@@ -86,14 +86,14 @@ def main(config):
 
 if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
-
+    #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', type=str, default='InferModel10Fold', choices=['InferModel10Fold',
                                                                                  'EnsembleModels',
                                                                                  'SolveJigsawPuzzles'])
 
-    parser.add_argument('--model_name_list', type=str, default= r'model_34', required = True)
-    parser.add_argument('--save_sub_name', type=str, default= 'model_34_fold0.csv')
+    parser.add_argument('--model_name_list', type=str, default=r'model_34')
+    parser.add_argument('--save_sub_name', type=str, default=r'model_34_fold0.csv')
     parser.add_argument('--train_fold_index', type=int, default=0)
     parser.add_argument('--model', type=str, default='model_34')
     parser.add_argument('--model_name', type=str, default='model_34')
