@@ -442,6 +442,11 @@ class SingleModelSolver(object):
         return out
 
     def infer_fold_TTA(self, fold_index, mode = 'max_map', Cycle = None):
+        """ Test Time Augmentation:
+            take 4 data augmentations at random as well as the un-augmented original (center-cropped). We will 
+            then calculate predictions for all these images, take the average, and make that our final prediction. 
+            Note that this is only for validation set and/or test set.
+        """
 
         print(mode)
         val_loader = get_foldloader(self.image_size, self.batch_size//2, fold_index, mode='val')
