@@ -1,6 +1,8 @@
 # Kaggle TGS Salt Identification Challenge 2018 4th place code
 This is the source code for my part of the 4th place solution to the [TGS Salt Identification Challenge](https://www.kaggle.com/c/tgs-salt-identification-challenge) hosted by Kaggle.com. 
 
+![image](https://github.com/SeuTao/Kaggle_TGS2018_4th_solution/blob/master/png/tgs.png)
+
 ## Recent Update
 
 **`2018.11.06`**: jigsaw python code，dirty code of handcraft rules and pseudo label training code updated.
@@ -24,7 +26,7 @@ This is the source code for my part of the 4th place solution to the [TGS Salt I
 - input: 101 random pad to 128*128, random LRflip;
 - encoder: resnet34, se-resnext50, resnext101_ibna, se-resnet101, se-resnet152, se resnet154;
 - decoder: scse, hypercolumn (not used in network with resnext101_ibna, se_resnext101 backbone), ibn block, dropout;
-- Deep supervision structure with Lovasz softmax (a great idea from Heng);
+- Deep supervision structure with Lovasz softmax;
 We designed 6 single models for the final submission;
 
 
@@ -49,14 +51,23 @@ We designed 6 single models for the final submission;
 |50+50_slim+101A+101B+152+154|0.874|0.892|
 
 #### Post processing
-According to the  2D and 3D jigsaw results (amazing ideas and great job from @CHAN), we applied around 10 handcraft rules that gave a 0.010~0.011 public LB boost and 0.001 private LB boost.
+According to the  2D and 3D jigsaw results, we applied around 10 handcraft rules that gave a 0.010~0.011 public LB boost and 0.001 private LB boost.
 
 |model|public LB| privare LB|
 | ---------------- | ---- | ----|
 |50+50_slim+101A+101B with post processing|0.884|0.893|
 
 #### Data distill (Pseudo Labeling)
-We started to do this part since the middle of  the competetion. As Heng posts, pseudo labeling  is pretty tricky and has the risk of overfitting. I am not sure whether it would boost the private LB untill the result is published. I just post our results here, the implementation details will be updated. 
+We started to do this part since the middle of  the competetion. Pseudo labeling  is pretty tricky and has the risk of overfitting. I am not sure whether it would boost the private LB untill the result is published. I just post our results here, the implementation details will be updated. 
+Steps (as the following flow chart shows):
+  1. Grabing the pseudo labels provided by previous predict (with post processing).
+  2. Randomly split the test set into two parts, one for training and the other for predicting.
+  3. To prevent overfitting to pseudo labels, we randomly select images from training set or test set (one part) with same probability in each mini batch.
+  4. Training the new dataset in three different networks with same steps as mentioned previously.
+  5. Predicting the test set (the other part) by all three trained models and voting the result.
+  6. Repeat step 3 to 5 except that in this time we change two test parts.
+  
+ ![image](https://github.com/SeuTao/Kaggle_TGS2018_4th_solution/blob/master/png/flow_chart.png)
 
 | model with datadistill|public LB| privare LB|placement
 | ---------------- | ---- | ----| ---|
