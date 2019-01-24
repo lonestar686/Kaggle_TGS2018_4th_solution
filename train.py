@@ -484,13 +484,14 @@ def main(config, aug_list):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2, 3"
     parser.add_argument('--train_fold_index', type=int, default=0)
     parser.add_argument('--model', type=str, default='model_34')
     parser.add_argument('--model_name', type=str, default='model_34')
     # parser.add_argument('--model_name', type=str, default='model_34_pseudo_0')
     parser.add_argument('--image_size', type=int, default=128)
-    parser.add_argument('--batch_size', type=int, default=16)
+    #parser.add_argument('--batch_size', type=int, default=16)
+    parser.add_argument('--batch_size', type=int, default=64)
 
 
     aug_list = ['flip_lr']
