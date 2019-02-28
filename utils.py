@@ -31,15 +31,15 @@ def save_csv_images(csv_path, save_path):
 
     for id in dict:
         id_img = dict[id]*255
-        cv2.imwrite(os.path.join(save_path,id+'.png'), id_img)
+        cv2.imwrite(os.path.join(save_path, id+'.png'), id_img)
 
-def create_csv_lists(image_dir, printable = True):
+def create_csv_lists(image_dir, printable=True):
     if not os.path.exists(image_dir):
         print("Image directory '" + image_dir + "' not found.")
         return None
 
     file_list = []
-    file_glob = os.path.join(image_dir,'*.' + 'csv')
+    file_glob = os.path.join(image_dir, '*.' + 'csv')
     file_list.extend(glob.glob(file_glob))
     if printable:
         print(len(file_list))
@@ -49,7 +49,7 @@ def create_csv_lists_recursive(image_dir):
     total_list = []
     for i in os.walk(image_dir):
         cur_path = i[0]
-        list = create_csv_lists(cur_path,printable=False)
+        list = create_csv_lists(cur_path, printable=False)
         total_list.extend(list)
 
     print(len(total_list))
@@ -74,7 +74,7 @@ def do_length_encode(x):
 
 from math import isnan
 def do_length_decode(rle, H, W, fill_value=255):
-    mask = np.zeros((H,W), np.uint8)
+    mask = np.zeros((H, W), np.uint8)
     if type(rle).__name__ == 'float': return mask
 
     mask = mask.reshape(-1)
@@ -93,7 +93,7 @@ def decode_csv(csv_name):
     rle_mask = data['rle_mask']
 
     dict = {}
-    for id, rle in zip(id,rle_mask):
+    for id, rle in zip(id, rle_mask):
         tmp = do_length_decode(rle, 101, 101, fill_value=1)
         dict[id] = tmp
 
@@ -102,7 +102,7 @@ def decode_csv(csv_name):
 def save_id_fea(predict_dict, save_dir):
     for id in predict_dict:
         output_mat = predict_dict[id].astype(np.float32)
-        np.save(os.path.join(save_dir,id), output_mat)
+        np.save(os.path.join(save_dir, id), output_mat)
 
 def state_dict_remove_moudle(moudle_state_dict, model):
     state_dict = model.state_dict()

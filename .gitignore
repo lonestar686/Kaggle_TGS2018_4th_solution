@@ -1,2 +1,3 @@
 __pycache__
-models/
+my_runs/
+.vscode/

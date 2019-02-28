@@ -12,7 +12,7 @@ import datetime
 from train import SingleModelSolver
 from utils import *
 
-def votingAllCycle(root_dir , model_list, save_name):
+def votingAllCycle(root_dir, model_list, save_name):
     print('voting ensemble')
 
     def get_predict_dict(csv_list):
@@ -62,7 +62,7 @@ def votingAllCycle(root_dir , model_list, save_name):
 
     print('done')
 
-def ensemble_models(root_dir ,model_list , save_name):
+def ensemble_models(root_dir, model_list, save_name):
     votingAllCycle(root_dir, model_list, save_name)
     submission_apply_jigsaw_postprocessing(save_name)
 
@@ -87,6 +87,7 @@ def main(config):
 if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
     #os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', type=str, default='InferModel10Fold', choices=['InferModel10Fold',
                                                                                  'EnsembleModels',
@@ -95,8 +96,8 @@ if __name__ == '__main__':
     parser.add_argument('--model_name_list', type=str, default=r'model_34')
     parser.add_argument('--save_sub_name', type=str, default=r'model_34_fold0.csv')
     parser.add_argument('--train_fold_index', type=int, default=0)
-    parser.add_argument('--model', type=str, default='model_34')
-    parser.add_argument('--model_name', type=str, default='model_34')
+    # parser.add_argument('--model', type=str, default='model_34')
+    # parser.add_argument('--model_name', type=str, default='model_34')
 
     parser.add_argument('--image_size', type=int, default=128)
     parser.add_argument('--batch_size', type=int, default=16*4)
@@ -109,8 +110,8 @@ if __name__ == '__main__':
     parser.add_argument('--jigsaw_dir', type=str, default='./jigsaw')
 
     # no use
-    parser.add_argument('--pseudo_csv', type=str, default = None)
-    parser.add_argument('--pseudo_split', type=int, default = -1)
+    parser.add_argument('--pseudo_csv', type=str, default=None)
+    parser.add_argument('--pseudo_split', type=int, default=-1)
     parser.add_argument('--log_step', type=int, default=10)
     parser.add_argument('--sample_step', type=int, default=10)
     parser.add_argument('--model_save_step', type=int, default=20000)
