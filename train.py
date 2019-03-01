@@ -154,6 +154,7 @@ class SingleModelSolver(object):
     def criterion(self, logits, label):
         logits = logits.squeeze(1)
         label = label.squeeze(1)
+        #
         loss = lovasz_hinge(logits, label, per_image=True, ignore=None)
         return loss
 
@@ -456,50 +457,62 @@ class SingleModelSolver(object):
 
         return valid_loss, max_map, threshold[max_index]
 
+    def predict_batch(self, model, images, thres):
+        """ predict a batch of images """
+
+        model.eval()
+
+        with torch.no_grad():
+            # TTA
+            img1 = images.numpy()
+            img2 = img1[:, :, :, ::-1]    # BCHW, horizonal flip
+            batch_size = img1.shape[0]
+            img_all = np.concatenate([img1, img2])
+
+            images = torch.FloatTensor(img_all)
+
+            inputs = self.to_var(images)
+
+            # forward
+            _, _, output = model(inputs)
+
+            # average two values
+            output = output.data.cpu().numpy()
+            mask = output[0:batch_size * 2]
+            output = mask[0:batch_size] + mask[batch_size:batch_size * 2][:, :, :, ::-1]
+            output = output / 2.0
+
+            # HWBC, C=1
+            output = output.transpose(2, 3, 0, 1).reshape([self.image_size, self.image_size, batch_size])
+
+            if self.image_size == 128:
+                output = center_crop(output, self.image_size, crop_size=101)
+
+            output = cv2.resize(output, (101, 101), cv2.INTER_CUBIC)
+            output[output >= thres] = 1.0
+            output[output < thres] = 0.0
+
+            output = output.transpose(2, 0, 1)   # HWB --> BHW
+            output = output.reshape([batch_size, 101, 101]).astype(np.uint8)
+
+        return output
+
     def get_infer_TTA(self, fold_index, test_loader, thres):
 
-        self.G.eval()
+        # self.G.eval()
 
         out = []
-        with torch.no_grad():
-            for i, (img_id, images) in enumerate(test_loader):
-                # TTA
-                img1 = images.numpy()
-                img2 = img1[:, :, :, ::-1]    # BCHW, horizonal flip
-                batch_size = img1.shape[0]
-                img_all = np.concatenate([img1, img2])
+        for i, (img_ids, images) in enumerate(test_loader):
 
-                images = torch.FloatTensor(img_all)
+            # predict a batch of images
+            output = self.predict_batch(self.G, images, thres)
 
-                inputs = self.to_var(images)
+            batch_size = len(output)
+            for id_index in range(batch_size):
+                out.append([img_ids[id_index], output[id_index].reshape([101, 101])])
 
-                # forward
-                _, _, output = self.G(inputs)
-
-                # average two values
-                output = output.data.cpu().numpy()
-                mask = output[0:batch_size * 2]
-                output = mask[0:batch_size] + mask[batch_size:batch_size * 2][:, :, :, ::-1]
-                output = output / 2.0
-
-                # HWBC, C=1
-                output = output.transpose(2, 3, 0, 1).reshape([self.image_size, self.image_size, batch_size])
-
-                if self.image_size == 128:
-                    output = center_crop(output, self.image_size, crop_size=101)
-
-                output = cv2.resize(output, (101, 101), cv2.INTER_CUBIC)
-                output[output >= thres] = 1.0
-                output[output < thres] = 0.0
-
-                output = output.transpose(2, 0, 1)   # HWB --> BHW
-                output = output.reshape([batch_size, 101, 101]).astype(np.uint8)
-
-                for id_index in range(batch_size):
-                    out.append([img_id[id_index], output[id_index].reshape([101, 101])])
-
-                if i%1000 == 0 and i > 0:
-                    print(self.model_name + ' fold index: '+str(fold_index) +' '+str(i))
+            if i%1000 == 0 and i > 0:
+                print(self.model_name + ' fold index: '+str(fold_index) +' '+str(i))
 
         return out
 
@@ -568,7 +581,7 @@ def main(config, aug_list):
 
 if __name__ == '__main__':
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2, 3"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_fold_index', type=int, default=0)
@@ -577,7 +590,7 @@ if __name__ == '__main__':
     # parser.add_argument('--model_name', type=str, default='model_34_pseudo_0')
     parser.add_argument('--image_size', type=int, default=128)
     #parser.add_argument('--batch_size', type=int, default=16)
-    parser.add_argument('--batch_size', type=int, default=64)
+    parser.add_argument('--batch_size', type=int, default=32)
 
     aug_list = ['flip_lr']
     parser.add_argument('--mode', type=str, default='train', choices=['train', 'test'])
